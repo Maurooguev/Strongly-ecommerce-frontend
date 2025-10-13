@@ -1,0 +1,39 @@
+.navbar {
+  background-color: #ffffff;
+  color: var(#083519); 
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  /* Eliminamos position: fixed y top */
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-logo {
+  color: #08471f;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.navbar-menu {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.navbar-menu a {
+  color: rgb(22, 59, 11);
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+.navbar-menu a:hover {
+  color: #22c55e;
+}
