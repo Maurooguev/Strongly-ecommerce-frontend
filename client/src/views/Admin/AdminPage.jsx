@@ -37,7 +37,7 @@ export default function AdminPage() {
                 {/* NUEVO BOTÓN: Gestionar Descuentos */}
                 <button 
                     className="btn-discount"
-                    onClick={() => navigate('/admin/discounts')}
+                    onClick={() => navigate('/admin/sale')}
                 >
                     Gestionar Descuentos
                 </button>

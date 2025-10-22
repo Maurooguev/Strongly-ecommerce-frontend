@@ -6,8 +6,11 @@ import Products from "./views/Products/Products.jsx";
 import Register from "./views/Register/Register.jsx";
 import AdminPage from "./views/Admin/AdminPage.jsx";
 import AdminRoute from "./views/Admin/AdminRoute.jsx"; 
+import manage from "./views/Admin/manage.jsx";
 import Cart from "./views/Cart/Cart.jsx";
 import AddProduct from "./views/Admin/AddProduct.jsx";
+import PaginaDescuentos from "./views/Admin/PaginaDescuentos.jsx";
+
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 
@@ -32,15 +35,15 @@ export default function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/cart" element={<Cart/>} />
         
-        {/* Ruta Protegida de Admin (También es hija del MainLayout) */}
-        <Route 
-            path="/admin" 
-            element={<AdminRoute element={AdminPage} />} 
-        />
-      <Route 
-            path="/admin/add"
-            element={<AdminRoute element={AddProduct} />}
-        />
+        {/*RUTAS ADMIN*/}
+        <Route path="/admin" element={<AdminRoute element={AdminPage} />} />
+        <Route path="/admin/add"element={<AdminRoute element={AddProduct} />}/>
+        <Route path="/admin/manage"element={<AdminRoute element={manage} />}/>
+         <Route path="/admin/sale"element={<AdminRoute element={PaginaDescuentos} />}/>
+        
+        
+        
+        
       </Route> 
       
     </Routes>
