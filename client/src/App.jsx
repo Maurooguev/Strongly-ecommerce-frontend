@@ -5,7 +5,7 @@ import Contact from "./views/Contact";
 import Products from "./views/Products/Products.jsx";
 import Register from "./views/Register/Register.jsx";
 import AdminPage from "./views/Admin/AdminPage.jsx";
-import AdminRoute from "./vi  ews/Admin/AdminRoute.jsx";    
+import AdminRoute from "./views/Admin/AdminRoute.jsx";    
 import "./App.css";
 import { Routes, Route  } from "react-router-dom";
 
