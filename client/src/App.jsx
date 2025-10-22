@@ -2,7 +2,7 @@ import Home from "./views/Home";
 import MainLayout from "./views/Layout/MainLayout";
 import Offers from "./views/Offers";  
 import Contact from "./views/Contact";
-import Products from "./views/Products";
+import Products from "./views/Products/Products.jsx";
 import Register from "./views/Register/Register.jsx";
 
 import "./App.css";
