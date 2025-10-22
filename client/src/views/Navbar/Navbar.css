@@ -17,10 +17,15 @@
 
 .navbar-logo {
   color: #08471f;
-  font-size: 1.8rem;
+  font-size: 2.5rem;
   font-weight: 700;
+  font-style:italic;
+  font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
 }
-
+.navbar-logo-link {
+    text-decoration: none; 
+    color: inherit; 
+}
 .navbar-menu {
   display: flex;
   gap: 32px;
