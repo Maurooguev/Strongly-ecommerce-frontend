@@ -5,6 +5,7 @@ import Offers from "./views/Offers";
 import Contact from "./views/Contact";
 import "./App.css";
 import { Routes, Route  } from "react-router-dom";
+import Register from "./views/Register";
 
 
 export default function App() {
@@ -14,9 +15,10 @@ export default function App() {
       <Navbar />  
       <Routes>
         <Route path="/home" element={<Home />} />
-        <Route path="/products" element={<Contact />} />
+        <Route path="/products" element={<Products/>} />
         <Route path="/offers" element={<Offers />} />
         <Route path="/contact" element={<Contact/>} />
+        <Route path="/register" element={<Register/>} />
       </Routes>
       <Footer />
     </>
