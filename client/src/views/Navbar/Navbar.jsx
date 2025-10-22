@@ -1,5 +1,6 @@
 import "./Navbar.css";
 import { Link } from "react-router-dom";
+import { FaShoppingCart } from 'react-icons/fa';
 
 export default function Navbar() {
   return (
@@ -15,7 +16,7 @@ export default function Navbar() {
           <li><Link to="/offers">Ofertas</Link></li>
           <li><Link to="/contact">Contacto</Link></li>
           <li><Link to="/register">Registro</Link></li>
-          <li><Link to="/cart">Carrito</Link></li>
+          <li><Link to="/cart"><FaShoppingCart /></Link></li> {/*Ahora es un ícono*/}
         </ul>
       </div>
     </nav>
