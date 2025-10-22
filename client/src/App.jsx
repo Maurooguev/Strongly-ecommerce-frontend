@@ -3,9 +3,11 @@ import Navbar from "./views/Navbar/Navbar";
 import Footer from "./views/Footer/Footer";
 import Offers from "./views/Offers";  
 import Contact from "./views/Contact";
+import Products from "./views/Products";
+import Register from "./views/Register";
 import "./App.css";
 import { Routes, Route  } from "react-router-dom";
-import Register from "./views/Register";
+
 
 
 export default function App() {
