@@ -3,7 +3,7 @@ import MainLayout from "./views/Layout/MainLayout";
 import Offers from "./views/Offers";  
 import Contact from "./views/Contact";
 import Products from "./views/Products";
-import Register from "./views/Register";
+import Register from "./views/Register/Register.jsx";
 
 import "./App.css";
 import { Routes, Route  } from "react-router-dom";
