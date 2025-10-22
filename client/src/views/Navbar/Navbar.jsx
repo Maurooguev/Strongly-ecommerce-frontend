@@ -46,7 +46,6 @@ export default function Navbar() {
         <ul className="navbar-menu">
           <li><Link to="/products">Productos</Link></li>
           <li><Link to="/offers">Ofertas</Link></li>
-          <li><Link to="/contact">Contacto</Link></li>
           <li><Link to="/register">Login</Link></li>
           <li><Link to="/cart"><FaShoppingCart /></Link></li>
         </ul>
