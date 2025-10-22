@@ -3,13 +3,15 @@
   color: var(#083519); 
   width: 100%;
   box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-  /* Eliminamos position: fixed y top */
+  margin-bottom: 0 !important;
+  padding-bottom: 0;
+
 }
 
 .navbar-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 16px 24px;
+  padding: 0px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
