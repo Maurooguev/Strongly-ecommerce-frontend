@@ -7,6 +7,7 @@ import Register from "./views/Register/Register.jsx";
 import AdminPage from "./views/Admin/AdminPage.jsx";
 import AdminRoute from "./views/Admin/AdminRoute.jsx"; 
 import Cart from "./views/Cart/Cart.jsx";
+import AddProduct from "./views/Admin/AddProduct.jsx";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 
@@ -36,7 +37,10 @@ export default function App() {
             path="/admin" 
             element={<AdminRoute element={AdminPage} />} 
         />
-      
+      <Route 
+            path="/admin/add"
+            element={<AdminRoute element={AddProduct} />}
+        />
       </Route> 
       
     </Routes>

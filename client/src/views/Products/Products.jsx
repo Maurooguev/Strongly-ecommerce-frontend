@@ -21,7 +21,6 @@ export default function Products() {
             
             {/* 2. CONTENEDOR PRINCIPAL DE PRODUCTOS */}
             <div className="products-main-content">
-                <h2>Explora Nuestros Productos</h2>
                 <ListCards productos={products} />
             </div>
         </div>
