@@ -1,55 +1,34 @@
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./ProductDetail.css";
-
-const initialProducts = [
-  { id: 1, nombre: "Mancuernas 10kg", descripcion: "Par de mancuernas de alta calidad", precio: 50, imagen: "/images/mancuernas.jpg" },
-  { id: 2, nombre: "Banda Elástica", descripcion: "Resistencia media", precio: 15, imagen: "/images/banda.jpg" },
-  { id: 3, nombre: "Barra Dominadas", descripcion: "Para puerta", precio: 75, imagen: "/images/barra.jpg" },
-];
 
 export default function ProductDetail() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const [cantidad, setCantidad] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const found = initialProducts.find((p) => p.id === parseInt(id));
-    setProduct(found);
-    }, [id]);
+    fetch(`/api/product/${id}`)
+      .then((res) => {
+        if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
+        return res.json();
+      })
+      .then((data) => setProduct(data))
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  }, [id]);
 
-  if (!product) return <p style={{ textAlign: "center" }}>Producto no encontrado 😕</p>;
-
-  const handleComprar = () => {
-    alert(`Compraste ${cantidad} unidad(es) de ${product.nombre} 🛒`);
-    };
+  if (loading) return <p>Cargando producto...</p>;
+  if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
+  if (!product) return <p>Producto no encontrado</p>;
 
   return (
-    <div className="product-detail-container">
-      <div className="product-image">
-        <img src={product.imagen || "/placeholder.jpg"} alt={product.nombre} />
-      </div>
-
-      <div className="product-info">
-        <h2>{product.nombre}</h2>
-        <p className="descripcion">{product.descripcion}</p>
-        <p className="precio">${product.precio}</p>
-
-        <div className="cantidad-container">
-          <label htmlFor="cantidad">Cantidad:</label>
-          <input
-            id="cantidad"
-            type="number"
-            min="1"
-            value={cantidad}
-            onChange={(e) => setCantidad(e.target.value)}
-          />
-        </div>
-
-        <button className="buy-button" onClick={handleComprar}>
-          Comprar
-        </button>
-      </div>
+    <div className="product-detail">
+      <h2>{product.name}</h2>
+      <p>{product.description}</p>
+      <p><b>Precio:</b> ${product.price}</p>
+      <p><b>Stock disponible:</b> {product.stock}</p>
     </div>
   );
 }
