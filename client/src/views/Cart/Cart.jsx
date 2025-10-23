@@ -1,146 +1,93 @@
-import React, { useState } from 'react'; // Importar useState
-import './Cart.css';
-// Asegúrate de que tienes instalada la librería react-icons
-import { FaTrashAlt, FaMinus, FaPlus } from 'react-icons/fa'; 
-import { Link } from 'react-router-dom';
-
-
-// DATOS INICIALES (Ahora se usarán para inicializar el estado)
-const initialCartItems = [
-    { id: 1, nombre: "Mancuernas 10kg", precio: 50, cantidad: 2, imagen: "..." },
-    { id: 2, nombre: "Banda Elástica", precio: 15, cantidad: 1, imagen: "..." },
-];
-
+import React, { useEffect, useState } from "react";
+import {
+  getCart,
+  removeItemFromCart,
+  updateCartItem,
+  clearCart,
+  checkout,
+} from "../../services/cartService";
+import "./Cart.css";
 
 export default function Cart() {
-    // 1. Convertir los datos estáticos en estado
-    const [cartItems, setCartItems] = useState(initialCartItems);
+  const [cart, setCart] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-    // 2. Funciones de cálculo (se ejecutan en cada renderizado)
-    const totalItems = cartItems.reduce((acc, item) => acc + item.cantidad, 0);
-    const subtotal = cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+  const loadCart = async () => {
+    try {
+      setLoading(true);
+      const data = await getCart();
+      setCart(data);
+    } catch (err) {
+      setError("Error al obtener el carrito. ¿Iniciaste sesión?");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    
-    // Función que maneja el cambio de cantidad (Añadir/Restar)
-    const handleQuantityChange = (id, newQty) => {
-         // No permitir cantidades menores a 1
-         if (newQty < 1) return; 
+  useEffect(() => {
+    loadCart();
+  }, []);
 
-         const updatedItems = cartItems.map(item => 
-             item.id === id ? { ...item, cantidad: newQty } : item
-         );
-         
-         setCartItems(updatedItems); // Actualiza el estado y dispara el re-renderizado
-    };
+  const handleRemove = async (productId) => {
+    await removeItemFromCart(productId);
+    loadCart();
+  };
 
-    // Función que maneja la eliminación de un producto
-    const handleRemove = (id) => {
-        const updatedItems = cartItems.filter(item => item.id !== id);
-        setCartItems(updatedItems); // Actualiza el estado
-        console.log(`Producto con ID ${id} eliminado.`);
-    };
+  const handleQuantityChange = async (productId, qty) => {
+    await updateCartItem(productId, qty);
+    loadCart();
+  };
 
+  const handleClear = async () => {
+    await clearCart();
+    loadCart();
+  };
 
-    return (
-        <div className="cart-page-container">
-            <h1>Tu Carrito ({totalItems} Productos)</h1>
-            
-            <div className="cart-content-wrapper">
-                
-                {/* 1. COLUMNA PRINCIPAL: LISTA DE PRODUCTOS */}
-                <div className="cart-items-list">
-                    {cartItems.map((item) => (
-                        <div key={item.id} className="cart-item">
-                            <div className="item-details">
-                                {/* Simulación de imagen: */}
-                                <div className="item-image-placeholder"></div>
-                                
-                                <div>
-                                    <p className="item-name">{item.nombre}</p>
-                                    <p className="item-price-unit">${item.precio.toFixed(2)} c/u</p>
-                                    
-                                    <div className="item-controls">
-                                        
-                                        {/* CONTROL DE CANTIDAD (+/-) */}
-                                        <div className="quantity-control">
-                                            <button 
-                                                // Llama a la función de cambio con cantidad - 1
-                                                onClick={() => handleQuantityChange(item.id, item.cantidad - 1)}
-                                                disabled={item.cantidad <= 1} // Desactivar si es 1
-                                                className="qty-btn minus-btn"
-                                            >
-                                                <FaMinus size={10} />
-                                            </button>
-                                            
-                                            <input 
-                                                type="number" 
-                                                min="1" 
-                                                value={item.cantidad} 
-                                                readOnly 
-                                                className="qty-input"
-                                            />
-                                            
-                                            <button 
-                                                // Llama a la función de cambio con cantidad + 1
-                                                onClick={() => handleQuantityChange(item.id, item.cantidad + 1)}
-                                                className="qty-btn plus-btn"
-                                            >
-                                                <FaPlus size={10} />
-                                            </button>
-                                        </div>
-                                        {/* FIN DE CONTROL DE CANTIDAD */}
+  const handleCheckout = async () => {
+    const response = await checkout();
+    alert("Compra realizada con éxito ✅");
+    console.log(response);
+    loadCart();
+  };
 
-                                        <button 
-                                            className="remove-btn" 
-                                            onClick={() => handleRemove(item.id)}
-                                        >
-                                            <FaTrashAlt />
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            {/* Precio total por línea (se recalcula automáticamente) */}
-                            <p className="item-subtotal-price">${(item.precio * item.cantidad).toFixed(2)}</p>
-                        </div>
-                    ))}
-                    
-                    {/* Mostrar mensaje si el carrito está vacío */}
-                    {cartItems.length === 0 && (
-                        <p className="empty-cart-message">Tu carrito está vacío. ¡Añade algunos productos!</p>
-                    )}
+  if (loading) return <p>Cargando carrito...</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
 
-                    {/* Enlace para seguir comprando */}
-                    <Link to="/products" className="continue-shopping-link">
-                        &#8592; Seguir Comprando
-                    </Link>
-                </div>
-                
-                
-                {/* 2. COLUMNA LATERAL: RESUMEN DEL PEDIDO */}
-                <div className="cart-summary">
-                    <h2>Resumen de Compra</h2>
-                    
-                    <div className="summary-line">
-                        <span>Productos ({totalItems}):</span>
-                        <span>${subtotal.toFixed(2)}</span>
-                    </div>
-                    
-                    {/* Se ELIMINA la línea de Costo de Envío */}
-                    
-                    <hr />
-                    
-                    <div className="summary-line total-line">
-                        <span>Total:</span>
-                        {/* El total ahora es el subtotal */}
-                        <span>${subtotal.toFixed(2)}</span> 
-                    </div>
-                    
-                    <button className="checkout-btn" disabled={cartItems.length === 0}>
-                        Finalizar Compra
-                    </button>
-                </div>
-            </div>
-        </div>
-    );
+  return (
+    <div className="cart-container">
+      <h2>🛒 Tu carrito</h2>
+
+      {(!cart || cart.items.length === 0) ? (
+        <p>Tu carrito está vacío.</p>
+      ) : (
+        <>
+          <ul className="cart-items">
+            {cart.items.map((item) => (
+              <li key={item.productId} className="cart-item">
+                <span>{item.name}</span>
+                <span>${item.unitPrice}</span>
+                <input
+                  type="number"
+                  min="1"
+                  value={item.quantity}
+                  onChange={(e) =>
+                    handleQuantityChange(item.productId, parseInt(e.target.value))
+                  }
+                />
+                <button onClick={() => handleRemove(item.productId)}>❌</button>
+              </li>
+            ))}
+          </ul>
+
+          <h3>Total: ${cart.total}</h3>
+
+          <div className="cart-actions">
+            <button onClick={handleClear}>Vaciar carrito</button>
+            <button onClick={handleCheckout}>Finalizar compra</button>
+          </div>
+        </>
+      )}
+    </div>
+  );
 }

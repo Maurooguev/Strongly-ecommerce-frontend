@@ -8,7 +8,7 @@ export default function Products() {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [sortOrder, setSortOrder] = useState(null); 
+  const [sortOrder, setSortOrder] = useState(null);
 
   // 🔹 Cargar todos los productos al inicio
   useEffect(() => {
@@ -17,9 +17,9 @@ export default function Products() {
 
   const cargarTodosLosProductos = () => {
     setCargando(true);
-    fetch("/api/product")
+    fetch("/product") // ✅ tu backend usa /product, no /api/product
       .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        if (!res.ok) throw new Error(`HTTP '${res.status}'`);
         return res.json();
       })
       .then((data) => setProductos(data))
@@ -50,7 +50,7 @@ export default function Products() {
       // 🔹 Hacer varios fetch en paralelo (uno por categoría)
       const responses = await Promise.all(
         updatedCategories.map((id) =>
-          fetch(`/api/product/category/${id}`).then((res) => res.json())
+          fetch(`/product/category/${id}`).then((res) => res.json()) // ✅ corregido
         )
       );
 
@@ -80,16 +80,17 @@ export default function Products() {
 
   return (
     <div className="products-page-container">
-      <Sidebar onCategorySelect={handleCategorySelect} onSortChange={handleSortChange} />
+      <Sidebar
+        onCategorySelect={handleCategorySelect}
+        onSortChange={handleSortChange}
+      />
       <div className="products-main-content">
         <h2>Productos disponibles</h2>
 
         {cargando && <p>Cargando...</p>}
         {error && <p style={{ color: "red" }}>{error}</p>}
 
-        {!cargando && !error && (
-          <ListCards productos={productos} />
-        )}
+        {!cargando && !error && <ListCards productos={productos} />}
       </div>
     </div>
   );
