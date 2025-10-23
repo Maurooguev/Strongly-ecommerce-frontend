@@ -5,17 +5,17 @@ import { Link } from "react-router-dom";
 export default function ListCards({ productos }) {
   return (
     <div className="list-cards">
-      {productos.map((prod, index) => (
+      {productos.map((prod) => (
         <Link
-          key={index}
+          key={prod.id}
           to={`/product/${prod.id}`}
           className="card-link"
           style={{ textDecoration: "none", color: "inherit" }}
         >
           <Card
-            nombre={prod.nombre}
-            descripcion={prod.descripcion}
-            precio={prod.precio}
+            nombre={prod.name}
+            descripcion={prod.description}
+            precio={prod.price}
           />
         </Link>
       ))}

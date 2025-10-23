@@ -16,13 +16,13 @@ export default function ProductDetail() {
   useEffect(() => {
     const found = initialProducts.find((p) => p.id === parseInt(id));
     setProduct(found);
-  }, [id]);
+    }, [id]);
 
   if (!product) return <p style={{ textAlign: "center" }}>Producto no encontrado 😕</p>;
 
   const handleComprar = () => {
     alert(`Compraste ${cantidad} unidad(es) de ${product.nombre} 🛒`);
-  };
+    };
 
   return (
     <div className="product-detail-container">

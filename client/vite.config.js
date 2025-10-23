@@ -6,10 +6,11 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:4002',
-        changeOrigin: true,
-        secure: false,
-      },
+      target: 'http://localhost:4002',
+      changeOrigin: true,
+      secure: false,
+      rewrite: (path) => path.replace(/^\/api/, '') // 🔥 quita el prefijo /api
     },
   },
+},
 })

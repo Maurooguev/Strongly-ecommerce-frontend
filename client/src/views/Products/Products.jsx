@@ -1,26 +1,41 @@
-import React, { useState } from 'react';
-import ListCards from '../../components/ListCards/ListCards'; 
-import Sidebar from '../Sidebar/Sidebar.jsx';
-import './Products.css'; 
-
-// Data de ejemplo (DEBES REEMPLAZAR ESTO CON TU DATA REAL)
-const initialProducts = [
-    { id: 1, nombre: 'Mancuernas 10kg', descripcion: 'Par de mancuernas de alta calidad', precio: 50, categoria: 'pesas', imagen: '/images/mancuernas.jpg' },
-    { id: 2, nombre: 'Banda Elástica', descripcion: 'Resistencia media', precio: 15, categoria: 'accesorios', imagen: '/images/banda.jpg' },
-    { id: 3, nombre: 'Barra Dominadas', descripcion: 'Para puerta', precio: 75, categoria: 'maquinas', imagen: '/images/barra.jpg' },
-];
+import React, { useEffect, useState } from "react";
+import ListCards from "../../components/ListCards/ListCards";
+import Sidebar from "../Sidebar/Sidebar.jsx";
+import "./Products.css";
 
 export default function Products() {
-    const [products, setProducts] = useState(initialProducts);
+  const [productos, setProductos] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState(null);
 
-    return (
-        <div className="products-page-container">
-            <Sidebar /> 
-            
-            <div className="products-main-content">
-                {/* Pasamos los productos al componente ListCards */}
-                <ListCards productos={products} />
-            </div>
-        </div>
-    );
+  useEffect(() => {
+    fetch("/api/product") // proxy -> http://localhost:4002/product
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Productos cargados:", data);
+        setProductos(data);
+      })
+      .catch((err) => {
+        console.error("Error al cargar productos:", err);
+        setError("No se pudieron cargar los productos");
+      })
+      .finally(() => setCargando(false));
+  }, []);
+
+  return (
+    <div className="products-page-container">
+      <Sidebar />
+      <div className="products-main-content">
+        <h2>Productos disponibles</h2>
+
+        {cargando && <p>Cargando...</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
+
+        {!cargando && !error && <ListCards productos={productos} />}
+      </div>
+    </div>
+  );
 }
