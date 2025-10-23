@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Sidebar.css";
 
-export default function Sidebar({ onCategorySelect }) {
+export default function Sidebar({ onCategorySelect, onSortChange }) {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -28,6 +28,28 @@ export default function Sidebar({ onCategorySelect }) {
           </li>
         ))}
       </ul>
+
+      <hr />
+
+      <h4>Ordenar por precio</h4>
+      <div className="sort-options">
+        <label>
+          <input
+            type="radio"
+            name="sort"
+            onChange={() => onSortChange("asc")}
+          />
+          Más barato primero
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="sort"
+            onChange={() => onSortChange("desc")}
+          />
+          Más caro primero
+        </label>
+      </div>
     </aside>
   );
 }

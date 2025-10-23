@@ -8,6 +8,7 @@ export default function Products() {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [sortOrder, setSortOrder] = useState(null); 
 
   // 🔹 Cargar todos los productos al inicio
   useEffect(() => {
@@ -68,9 +69,18 @@ export default function Products() {
     }
   };
 
+  // 🔹 Manejo del ordenamiento
+  const handleSortChange = (order) => {
+    setSortOrder(order);
+    let sorted = [...productos];
+    if (order === "asc") sorted.sort((a, b) => a.price - b.price);
+    if (order === "desc") sorted.sort((a, b) => b.price - a.price);
+    setProductos(sorted);
+  };
+
   return (
     <div className="products-page-container">
-      <Sidebar onCategorySelect={handleCategorySelect} />
+      <Sidebar onCategorySelect={handleCategorySelect} onSortChange={handleSortChange} />
       <div className="products-main-content">
         <h2>Productos disponibles</h2>
 
