@@ -5,22 +5,20 @@ import './Products.css';
 
 // Data de ejemplo (DEBES REEMPLAZAR ESTO CON TU DATA REAL)
 const initialProducts = [
-    { nombre: 'Mancuernas 10kg', descripcion: 'Par de mancuernas de alta calidad', precio: 50, categoria: 'pesas' },
-    { nombre: 'Banda Elástica', descripcion: 'Resistencia media', precio: 15, categoria: 'accesorios' },
-    { nombre: 'Barra Dominadas', descripcion: 'Para puerta', precio: 75, categoria: 'maquinas' },
-    
+    { id: 1, nombre: 'Mancuernas 10kg', descripcion: 'Par de mancuernas de alta calidad', precio: 50, categoria: 'pesas', imagen: '/images/mancuernas.jpg' },
+    { id: 2, nombre: 'Banda Elástica', descripcion: 'Resistencia media', precio: 15, categoria: 'accesorios', imagen: '/images/banda.jpg' },
+    { id: 3, nombre: 'Barra Dominadas', descripcion: 'Para puerta', precio: 75, categoria: 'maquinas', imagen: '/images/barra.jpg' },
 ];
 
 export default function Products() {
-    // Aquí podrías tener lógica de filtros y estado, por ahora usamos toda la lista
     const [products, setProducts] = useState(initialProducts);
 
     return (
         <div className="products-page-container">
             <Sidebar /> 
             
-            {/* 2. CONTENEDOR PRINCIPAL DE PRODUCTOS */}
             <div className="products-main-content">
+                {/* Pasamos los productos al componente ListCards */}
                 <ListCards productos={products} />
             </div>
         </div>
