@@ -2,8 +2,8 @@ import Home from "./views/Home";
 import MainLayout from "./views/Layout/MainLayout";
 import Offers from "./views/Offers"; 
 import Products from "./views/Products/Products.jsx";
-import ProductDetail from "./views/Products/ProductDetail";
 import Register from "./views/Register/Register.jsx";
+import ProductDetail from "./views/Products/ProductDetail";
 import AdminPage from "./views/Admin/AdminPage.jsx";
 import AdminRoute from "./views/Admin/AdminRoute.jsx"; 
 import manage from "./views/Admin/manage.jsx";
@@ -31,8 +31,8 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/products" element={<Products />} />
-        <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/offers" element={<Offers />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart/>} />
         
         {/*RUTAS ADMIN*/}
